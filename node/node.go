@@ -7,12 +7,12 @@ import (
 	"crypto/x509"
 	"encoding/hex"
 	"fmt"
-	"github.com/nictuku/dht"
 	"net"
 	"sync"
 	"time"
 
 	"github.com/derekstavis/bluntly/netutils"
+	"github.com/nictuku/dht"
 )
 
 /* CONSTANTS */
@@ -32,22 +32,12 @@ type Node struct {
 	config *Config
 }
 
-/* CONFIG */
-type FileConfig struct {
-	dhtPort    int
-	ownKeyFile string
-	id         string
-	configRoot string
-	holePunch  HolePunchConf
-}
-
 type Config struct {
 	dhtPort     int
 	ownKey      *rsa.PrivateKey
 	id          string
-	configRoot  string
 	holePunch   HolePunchConf
-	contactList *ContactList
+	ContactList *ContactList
 }
 
 type HolePunchConf struct {
@@ -85,19 +75,38 @@ func (contacts *ContactList) GetContact(key [sha256.Size]byte) *Contact {
 	return (*contacts.Contacts)[key]
 }
 
+func NewConfig(privateKey *rsa.PrivateKey, contacts *ContactList) *Config {
+	return &Config{
+		dhtPort: 57832,
+		ownKey:  privateKey,
+		id:      "xxx",
+		holePunch: HolePunchConf{
+			recvPort: 23875,
+		},
+		ContactList: contacts,
+	}
+}
+
 func NewNode(conf *Config) (node *Node, err error) {
-	// setup the DHT
 	dhtConf := dht.DefaultConfig
 	dhtConf.Port = conf.dhtPort
 	dhtClient, err := dht.New(dhtConf)
 	if err != nil {
-		return
+		return nil, err
 	}
+
 	dht := newDHT(dhtClient)
 
-	go dht.Run()
+	node = &Node{
+		dht:    dht,
+		config: conf,
+	}
 
-	node.dht = dht
+	dht.Run()
+
+	if err != nil {
+		return nil, err
+	}
 
 	return node, nil
 }
@@ -188,7 +197,7 @@ func (n *Node) Listen(port int) (listener *Listener, err error) {
 			}
 
 			go func() {
-				conn, handshakeError := HandleServerConn(tcpConn, n.config.ownKey, n.config.contactList)
+				conn, handshakeError := HandleServerConn(tcpConn, n.config.ownKey, n.config.ContactList)
 				if err != nil {
 					Log(LOG_INFO,
 						"handling client connection from address %s %s",
@@ -287,7 +296,11 @@ func (d *DHT) Run() {
 	go d.drainResults()
 
 	// run the underlying dht client normally
-	d.DHT.Run()
+	err := d.DHT.Start()
+
+	if err != nil {
+		fmt.Println("error starting dht")
+	}
 }
 
 // subscribe for peer notifications on that infohash

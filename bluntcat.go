@@ -1,9 +1,12 @@
 package main
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
 	"fmt"
-	"github.com/derekstavis/bluntly/node"
 	"runtime"
+
+	"github.com/derekstavis/bluntly/node"
 )
 
 func main() {
@@ -11,7 +14,18 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	fmt.Println("running bluntly..")
-	_, err := node.NewNode(nil)
+
+	contacts := node.NewContactList()
+
+	privateKey, _ := rsa.GenerateKey(rand.Reader, 1024)
+
+	contacts.AddContact(&node.Contact{
+		PublicKey: &privateKey.PublicKey,
+	})
+
+	_, err := node.NewNode(
+		node.NewConfig(privateKey, contacts),
+	)
 
 	if err != nil {
 		fmt.Println("failed to create a node: ", err)
