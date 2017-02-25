@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"github.com/danoctavian/bluntly/node"
+	"runtime"
 )
 
 func main() {
@@ -11,7 +11,7 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	fmt.Println("running bluntly..")
-	_ ,err := node.NewNode(nil)
+	_, err := node.NewNode(nil)
 
 	if err != nil {
 		fmt.Println("failed to create a node: ", err)
