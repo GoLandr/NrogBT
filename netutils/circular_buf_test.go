@@ -3,7 +3,7 @@ package netutils_test
 import (
 	"bytes"
 	"fmt"
-	"github.com/danoctavian/bluntly/netutils"
+	"github.com/derekstavis/bluntly/netutils"
 	"testing"
 )
 

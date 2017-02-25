@@ -15,7 +15,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/danoctavian/bluntly/netutils"
+	"github.com/derekstavis/bluntly/netutils"
 )
 
 func HandleClientConn(rawConn net.Conn,

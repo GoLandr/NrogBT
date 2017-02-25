@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/danoctavian/bluntly/netutils"
+	"github.com/derekstavis/bluntly/netutils"
 )
 
 /* CONSTANTS */

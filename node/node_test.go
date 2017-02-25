@@ -3,7 +3,7 @@ package node_test
 import (
 	"bytes"
 	"crypto/rand"
-	"github.com/danoctavian/bluntly/node"
+	"github.com/derekstavis/bluntly/node"
 	"golang.org/x/crypto/nacl/box"
 	"testing"
 )
