@@ -1,0 +1,28 @@
+hash: 49a37c7679bb5bf9b53c056ab587a3cca86fed473a6825a7a165de7f27e1768c
+updated: 2017-02-25T20:45:55.3191869-03:00
+imports:
+- name: github.com/golang/glog
+  version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
+- name: github.com/golang/groupcache
+  version: 72d04f9fcdec7d3821820cc4a6f150eae553639a
+  subpackages:
+  - lru
+- name: github.com/jackpal/bencode-go
+  version: 8b8d9a9b37fcd43f365439810d725081b114af68
+- name: github.com/nictuku/dht
+  version: 248e65a28d3b59e57d7daee1f28013bafa835f66
+- name: github.com/nictuku/nettools
+  version: 8867a2107ad3a0998e2d36c67ed2115d9a399df8
+- name: github.com/youtube/vitess
+  version: dfea354cbe89b95d4d073653c15b6f39a6801c22
+  subpackages:
+  - go/cache
+- name: golang.org/x/crypto
+  version: 453249f01cfeb54c3d549ddb75ff152ca243f9d8
+  subpackages:
+  - curve25519
+  - nacl/box
+  - nacl/secretbox
+  - poly1305
+  - salsa20/salsa
+testImports: []

@@ -1,0 +1,7 @@
+package: github.com/derekstavis/bluntly
+import:
+- package: golang.org/x/crypto
+  subpackages:
+  - nacl/box
+- package: github.com/nictuku/dht
+  version: 248e65a
