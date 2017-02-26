@@ -296,7 +296,7 @@ func (d *DHT) Run() {
 	go d.drainResults()
 
 	// run the underlying dht client normally
-	err := d.DHT.Start()
+	err := d.DHT.Run()
 
 	if err != nil {
 		fmt.Println("error starting dht")
