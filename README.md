@@ -1,21 +1,18 @@
-# bluntly
+# NrogBT
 
-talk to whoever, wherever safely with no bullshit
+It is another NAT P2P communication channel that connecting within the network around. Talk to whoever, wherever safely with no bullshit
 
-Bluntly allows you to setup a secure connection to a peer by only knowing its public key (and it knowing yours).
+NrogBT allows you to setup a secure connection to a peer by only knowing its public key (and it knowing yours).
 
 No servers needed, no NAT getting in the way. It's a POC (proof-of-concept) so don't start talking with snowden with this.
 
-![alt text](https://github.com/danoctavian/bluntly/blob/master/docs/chat-diagram.png "fuuak")
+![alt text](https://github.com/GoLandr/NrogBT/blob/master/docs/chat-diagram.png "fuuak")
 
-Disclaimer: there's no really clever ideas here, i'm just stiching some things together. It's a hacky implementation (I can't justify
-myself for this, it just felt good to screw around in javascript).
+Disclaimer: there's no really clever ideas here, i'm just stiching some things together. It's a hacky implementation (I can't justify myself for this, it just felt good to screw around in javascript).
 
 #### Important note
 
-Bluntly is currently undergoing a rewrite from javascript to Golang. the old javascript code is in node-bluntly. the rest of the code is work in progress.
-
-Reasons for rewriting: the first version was an unstable POC, meant to showcase what's possible and explore the problem space.
+NrogBT is now fully implemented in Golang.
 
 Why Golang? Has all necessary libraries (dht, crypto, except for a good implementation of UTP), has reliable cryptography libraries, has good networking libraries and chans/green threads, is a simple programming language that allows individuals with no experience in Golang to verify the app for correctness and security.
 
@@ -37,20 +34,7 @@ your RSA pubkey
 
 ### RUN IT
 
-Install dependencies.
-
-* nodejs https://nodejs.org/download/
-
-* npm 
-
-Get code dependencies:
-
-```bash
-cd node-bluntly
-npm install 
-``` 
-
-for a quick run, use the RSA key pair checked in the repo for both parties. Get 2 machines and do
+For a quick run, use the RSA key pair checked in the repo for both parties. Get 2 machines and do
 
 Go to the test-data directory:
 
