@@ -24,9 +24,9 @@ How?
 
 * once you it has its IP, connect (if there's a NAT in the way, just penetrate it. see how below)
 
-* client sends encrypted handshake (with RSA pub key) to listener containing your curve25519 pub key 
+* client sends encrypted handshake (with RSA pub key) to listener containing your curve25519 pub key
 
-* listener responds with its curve25519 pub key in a handshake response encrypted with 
+* listener responds with its curve25519 pub key in a handshake response encrypted with
 your RSA pubkey
 
 * both do Diffie hellman and derive shared secret. encrypt all messages from here on using that.
@@ -46,34 +46,44 @@ For the server:
 
 ```bash
 node ../index.js -s 5678 # or whatever ports you want to listen on
-``` 
+```
 
 For the client:
 
 ```bash
 node ../index.js -c myself
-``` 
+```
 
 Obviously the above is not secure, because the private key is in the open.
 
 ### RUNTIME REQUIREMENTS
 
 bluntly expects you provide with a config file containing:
+default port config has
+```javascript
+dhtPort: 57832,
+ownKey:  privateKey,
+id:      "xxx",
+holePunch: HolePunchConf{
+			recvPort: 23875,
+},
+ContactList: contacts,
+```
 
 ```javascript
 {
-  "dhtPort": 20000, // the port 
+  "dhtPort": 20000, // the port
   "ownKey": {"pub": "mypub.rsa", "priv": "mypriv.rsa"}, // filepaths to your pub and private rsa keys
   "ID": "myself", // your bluntly name
   "contactsDir": "contacts", // the path of the directory containing your friends' pub keys
   // if you're holepunching through NAT, the port you want other peers to UDP connect to
-  // if it's not specified, hole punch will not be attempted at all and it will fail if 
+  // if it's not specified, hole punch will not be attempted at all and it will fail if
   // no direct TCP connection is possible
   "holePunch": {"recvPort": 23456}  
 }
 ```
 
-If you don't explicitly specify a path to a config file with --config=myconfigfile it will look for a 
+If you don't explicitly specify a path to a config file with --config=myconfigfile it will look for a
 file *blunt-conf.json* in the current directory and use that as a config file.
 
 **contactsDir**  contains a json file called *index.json* which specifies a mapping from friend ids to the file containing
@@ -107,3 +117,5 @@ Just wanted smth to easily use without making accounts here and there and having
 
 I wanted to hack something in javascript to see how it's like to build prototypes with it.
 
+## Generate private key
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
