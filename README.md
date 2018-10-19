@@ -118,4 +118,4 @@ Just wanted smth to easily use without making accounts here and there and having
 I wanted to hack something in javascript to see how it's like to build prototypes with it.
 
 ## Generate private key
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+ssh-keygen -t rsa -b 1024 -C "your_email@example.com"

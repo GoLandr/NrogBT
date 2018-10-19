@@ -25,35 +25,27 @@ func HandleClientConn(rawConn net.Conn,
 	if err != nil {
 		return
 	}
-
 	keyHash, err := pubKeyHash(&ownKey.PublicKey)
 	if err != nil {
 		return
 	}
-
 	connRequest := ConnRequest{keyHash, pubKey}
-
 	reqBytes, err := connRequest.MarshalBinary()
 	if err != nil {
 		return
 	}
-
 	err = writePubKeyMsg(rawConn, peerPubKey, reqBytes)
 	if err != nil {
 		return
 	}
-
 	plainReply, err := readPubKeyMsg(rawConn, ownKey)
 	if err != nil {
 		return
 	}
-
 	var peerSessionKey [sessionKeyLen]byte
 	copy(peerSessionKey[:], plainReply)
-
 	var sharedKey [sessionKeyLen]byte
 	box.Precompute(&sharedKey, &peerSessionKey, privKey)
-
 	return &Conn{Conn: rawConn,
 		sharedKey:      &sharedKey,
 		readBuf:        netutils.NewCircularBuf(readBufferCapacity),

@@ -19,29 +19,31 @@ func TestClientServerProtocol(t *testing.T) {
 
 	/*
 		connA, connB, err := NewTestTCPConns()
-
 		if err != nil {
 			t.Errorf("failed to create client/server TCP conns: ", err)
 			return
 		}
 	*/
-
+	fmt.Println("up now and running up.1111.")
 	connA, connB := NewTestConns()
+	fmt.Println("up now and running up.11.")
 
-	keyFile := "../data/mypriv.rsa"
+	keyFile := "../data/pdat.rsa"
+	fmt.Println("up now and running up.12.")
 
 	keyA, err := node.RsaKeyFromPEM(keyFile)
+
 	if err != nil {
 		t.Errorf("failed loading key file: %s", err)
 		return
 	}
-
 	keyB, err := node.RsaKeyFromPEM(keyFile)
+
 	if err != nil {
 		t.Errorf("failed loading key file: %s", err)
 		return
 	}
-
+	fmt.Println("up now and running up.1.")
 	sentByA := [][]byte{[]byte{1, 0, 0, 0, 1}, []byte{2, 0, 0, 0, 2}}
 	sentByB := [][]byte{[]byte{3, 0, 0, 0, 3, 4, 7}, bytes.Repeat([]byte{66}, 256)}
 
@@ -51,6 +53,8 @@ func TestClientServerProtocol(t *testing.T) {
 	contactList := node.NewContactList()
 
 	contactList.AddContact(&node.Contact{&keyA.PublicKey})
+
+	fmt.Println("up now and running up.2.")
 
 	go func() {
 		var clientConn net.Conn = nil
